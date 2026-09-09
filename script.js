@@ -36,7 +36,6 @@ addBtn.addEventListener('click', () => {
   siteNameInput.focus();
 });
 
-
 function closeModal() {
   addModal.classList.remove('active');
 
@@ -48,19 +47,14 @@ function closeModal() {
   customIconGroup.classList.add('hidden');
 }
 
-
 closeModalBtn.addEventListener('click', closeModal);
 
-
-// 모달 바깥쪽 클릭 시 닫기
 addModal.addEventListener('click', (e) => {
   if (e.target === addModal) {
     closeModal();
   }
 });
 
-
-// 커스텀 아이콘 토글
 iconToggle.addEventListener('change', (e) => {
   if (e.target.checked) {
     customIconGroup.classList.remove('hidden');
@@ -76,7 +70,6 @@ iconToggle.addEventListener('change', (e) => {
 // ==========================================
 
 saveShortcutBtn.addEventListener('click', () => {
-
   const name = siteNameInput.value.trim();
 
   let url = siteUrlInput.value
@@ -86,54 +79,44 @@ saveShortcutBtn.addEventListener('click', () => {
   const useCustomIcon = iconToggle.checked;
   const customIconUrl = customIconUrlInput.value.trim();
 
-
-  // 이름과 URL 확인
   if (!name || !url) {
     alert('사이트 이름과 주소를 모두 입력해주세요!');
     return;
   }
 
-
-  // http / https가 없으면 https 자동 추가
   if (!/^https?:\/\//i.test(url)) {
     url = 'https://' + url;
   }
 
-
-  // ==========================================
-  // 아이콘 주소 결정
-  // ==========================================
+  // URL 형식 확인
+  try {
+    new URL(url);
+  } catch (e) {
+    alert('올바른 사이트 주소를 입력해주세요!');
+    return;
+  }
 
   let finalIcon = '';
 
   if (useCustomIcon && customIconUrl) {
-
-    // 사용자가 직접 입력한 아이콘
-    finalIcon = customIconUrl;
-
-  } else {
-
-    // 사이트의 파비콘 자동 가져오기
     try {
-
+      new URL(customIconUrl);
+      finalIcon = customIconUrl;
+    } catch (e) {
+      alert('올바른 이미지 주소를 입력해주세요!');
+      return;
+    }
+  } else {
+    try {
       const domain = new URL(url).hostname;
 
       finalIcon =
         `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
-
     } catch (e) {
-
       console.error('URL을 확인할 수 없습니다.', e);
-
       finalIcon = '';
-
     }
   }
-
-
-  // ==========================================
-  // 새로운 바로가기 생성
-  // ==========================================
 
   const newShortcut = {
     id: Date.now(),
@@ -143,7 +126,6 @@ saveShortcutBtn.addEventListener('click', () => {
     clicks: 0,
     timestamp: Date.now()
   };
-
 
   shortcuts.push(newShortcut);
 
@@ -170,51 +152,33 @@ function saveToStorage() {
 // ==========================================
 
 function renderShortcuts() {
-
   const keyword = searchInput.value.toLowerCase();
   const sortType = sortSelect.value;
 
-
-  // 검색
   let filtered = shortcuts.filter(item =>
     item.name.toLowerCase().includes(keyword) ||
     item.url.toLowerCase().includes(keyword)
   );
 
-
-  // 정렬
   if (sortType === 'latest') {
-
     filtered.sort(
       (a, b) => b.timestamp - a.timestamp
     );
-
   } else if (sortType === 'name') {
-
     filtered.sort(
       (a, b) => a.name.localeCompare(b.name)
     );
-
   } else if (sortType === 'clicks') {
-
     filtered.sort(
       (a, b) => b.clicks - a.clicks
     );
   }
 
-
-  // DocumentFragment 사용
   const fragment = document.createDocumentFragment();
 
   shortcutGrid.innerHTML = '';
 
-
-  // ==========================================
-  // 바로가기 카드 생성
-  // ==========================================
-
   filtered.forEach(item => {
-
     const card = document.createElement('div');
 
     card.className = 'shortcut-item-container';
@@ -222,24 +186,20 @@ function renderShortcuts() {
     card.style.position = 'relative';
     card.style.display = 'inline-block';
 
-
+    // 기본 HTML 구조만 생성
     card.innerHTML = `
       <a
-        href="${item.url}"
         target="_blank"
         rel="noopener noreferrer"
         class="shortcut-item"
       >
-
         <div
           class="icon-wrapper"
           style="pointer-events: none;"
         >
           <img
-            src="${item.icon}"
             alt=""
             style="pointer-events: none;"
-            onerror="this.onerror=null; this.style.display='none';"
           >
         </div>
 
@@ -247,7 +207,6 @@ function renderShortcuts() {
           class="shortcut-name"
           style="pointer-events: none;"
         ></span>
-
       </a>
 
       <button
@@ -281,84 +240,68 @@ function renderShortcuts() {
       </button>
     `;
 
+    const shortcutLink =
+      card.querySelector('.shortcut-item');
 
-    // 사이트 이름
-    card.querySelector('.shortcut-name').textContent =
-      item.name;
+    const icon =
+      card.querySelector('.icon-wrapper img');
 
+    const shortcutName =
+      card.querySelector('.shortcut-name');
 
-    // ==========================================
-    // 마우스 올렸을 때 삭제 버튼 표시
-    // ==========================================
+    // 사용자 입력값은 DOM 속성으로 직접 설정
+    shortcutLink.href = item.url;
+    icon.src = item.icon;
+    shortcutName.textContent = item.name;
 
+    // 아이콘 로딩 실패 시 숨김
+    icon.addEventListener('error', () => {
+      icon.style.display = 'none';
+    });
+
+    // 삭제 버튼 표시
     card.addEventListener('mouseenter', () => {
-
       card.querySelector(
         '.delete-shortcut-btn'
       ).style.display = 'flex';
-
     });
 
-
     card.addEventListener('mouseleave', () => {
-
       card.querySelector(
         '.delete-shortcut-btn'
       ).style.display = 'none';
-
     });
 
-
-    // ==========================================
     // 바로가기 클릭
-    // ==========================================
+    shortcutLink.addEventListener('click', () => {
+      const index = shortcuts.findIndex(
+        s => s.id === item.id
+      );
 
-    card.querySelector('.shortcut-item')
-      .addEventListener('click', () => {
+      if (index !== -1) {
+        shortcuts[index].clicks += 1;
+        saveToStorage();
+      }
 
-        const index = shortcuts.findIndex(
-          s => s.id === item.id
+      if (sortSelect.value === 'clicks') {
+        setTimeout(
+          renderShortcuts,
+          500
         );
+      }
+    });
 
-
-        if (index !== -1) {
-
-          shortcuts[index].clicks += 1;
-
-          saveToStorage();
-        }
-
-
-        // 클릭순 정렬일 경우 다시 렌더링
-        if (sortSelect.value === 'clicks') {
-
-          setTimeout(
-            renderShortcuts,
-            500
-          );
-
-        }
-
-      });
-
-
-    // ==========================================
-    // 삭제
-    // ==========================================
-
+    // 삭제 버튼
     card.querySelector('.delete-shortcut-btn')
       .addEventListener('click', (e) => {
-
         e.preventDefault();
         e.stopPropagation();
-
 
         if (
           confirm(
             `'${item.name}' 바로가기를 삭제하시겠습니까?`
           )
         ) {
-
           shortcuts = shortcuts.filter(
             s => s.id !== item.id
           );
@@ -366,14 +309,10 @@ function renderShortcuts() {
           saveToStorage();
           renderShortcuts();
         }
-
       });
 
-
     fragment.appendChild(card);
-
   });
-
 
   shortcutGrid.appendChild(fragment);
 }
@@ -387,7 +326,6 @@ searchInput.addEventListener(
   'input',
   renderShortcuts
 );
-
 
 sortSelect.addEventListener(
   'change',
