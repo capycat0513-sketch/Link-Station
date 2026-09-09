@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Link Station</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <header class="control-panel">
+
+      <!-- LinkStation 로고 -->
+      <div class="brand">
+        <img src="logo.png" alt="Link Station 로고">
+        <span>Link Station</span>
+      </div>
+
+      <!-- 검색 -->
+      <input
+        type="text"
+        id="search-input"
+        placeholder="사이트 이름 또는 URL 검색..."
+      >
+
+      <!-- 정렬 / 추가 -->
+      <div class="actions">
+
+        <select id="sort-select">
+          <option value="latest">최신 등록순</option>
+          <option value="name">이름순</option>
+          <option value="clicks">자주 방문한 순</option>
+        </select>
+
+        <button id="add-btn">
+          + 바로가기 추가
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <!-- 바로가기 목록 -->
+    <main
+      id="shortcut-grid"
+      class="shortcut-grid"
+    >
+    </main>
+
+  </div>
+
+
+  <!-- 바로가기 추가 모달 -->
+  <div id="add-modal" class="modal-overlay">
+
+    <div class="modal-content">
+
+      <h3>새 바로가기 추가</h3>
+
+      <div class="input-group">
+        <label for="site-name">사이트 이름</label>
+
+        <input
+          type="text"
+          id="site-name"
+          placeholder="예: 네이버"
+        >
+      </div>
+
+
+      <div class="input-group">
+        <label for="site-url">사이트 주소 (URL)</label>
+
+        <input
+          type="text"
+          id="site-url"
+          placeholder="https://naver.com"
+        >
+      </div>
+
+
+      <!-- 커스텀 아이콘 -->
+      <div class="toggle-group">
+
+        <span>나만의 아이콘 직접 넣기</span>
+
+        <label class="switch">
+
+          <input
+            type="checkbox"
+            id="icon-toggle"
+          >
+
+          <span class="slider"></span>
+
+        </label>
+
+      </div>
+
+
+      <!-- 커스텀 아이콘 URL -->
+      <div
+        id="custom-icon-group"
+        class="input-group hidden"
+      >
+
+        <label for="custom-icon-url">
+          이미지 주소 (URL)
+        </label>
+
+        <input
+          type="text"
+          id="custom-icon-url"
+          placeholder="https://.../my-image.png"
+        >
+
+      </div>
+
+
+      <!-- 모달 버튼 -->
+      <div class="modal-actions">
+
+        <button id="close-modal-btn">
+          취소
+        </button>
+
+        <button id="save-shortcut-btn">
+          저장
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
