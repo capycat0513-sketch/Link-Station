@@ -31,7 +31,6 @@ body {
   border-bottom: 1px solid #292932;
 }
 
-/* 로고를 넣을 경우 */
 .brand {
   display: flex;
   align-items: center;
@@ -82,6 +81,7 @@ body {
 
 .actions {
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 
@@ -118,6 +118,45 @@ body {
 }
 
 #add-btn:active {
+  transform: translateY(0);
+}
+
+/* =========================
+   ? 도움말 버튼
+========================= */
+
+.help-btn {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border: 1px solid #33333f;
+  border-radius: 50%;
+
+  background-color: #18181f;
+  color: #aaaab5;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s;
+}
+
+.help-btn:hover {
+  color: #fff;
+  border-color: #6d5dfc;
+  background-color: #22222b;
+  transform: translateY(-1px);
+}
+
+.help-btn:active {
   transform: translateY(0);
 }
 
@@ -343,8 +382,6 @@ body {
   color: #ddd;
 }
 
-/* 토글 버튼 */
-
 .switch {
   position: relative;
 
@@ -456,10 +493,235 @@ body {
 }
 
 /* =========================
+   튜토리얼 확인창
+========================= */
+
+.tutorial-confirm-content {
+  background-color: #18181f;
+  color: #fff;
+
+  padding: 30px;
+
+  border: 1px solid #33333f;
+  border-radius: 16px;
+
+  width: 90%;
+  max-width: 400px;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+
+  text-align: center;
+}
+
+.tutorial-confirm-content h3 {
+  margin-bottom: 12px;
+  font-size: 20px;
+}
+
+.tutorial-confirm-content p {
+  color: #9999a5;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* =========================
+   튜토리얼 확인 버튼
+========================= */
+
+.tutorial-confirm-actions {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 25px;
+}
+
+.tutorial-confirm-actions button {
+  min-width: 90px;
+
+  padding: 10px 16px;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+#tutorial-no-btn {
+  background-color: #292932;
+  color: #ddd;
+}
+
+#tutorial-no-btn:hover {
+  background-color: #353540;
+}
+
+#tutorial-yes-btn {
+  background-color: #6d5dfc;
+  color: #fff;
+}
+
+#tutorial-yes-btn:hover {
+  background-color: #5b4bea;
+}
+
+/* =========================
+   튜토리얼 본문
+========================= */
+
+.tutorial-content {
+  position: relative;
+
+  background-color: #18181f;
+  color: #fff;
+
+  padding: 30px;
+
+  border: 1px solid #33333f;
+  border-radius: 16px;
+
+  width: 90%;
+  max-width: 550px;
+  max-height: 85vh;
+
+  overflow-y: auto;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.tutorial-content h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.tutorial-intro {
+  color: #9999a5;
+  font-size: 14px;
+  line-height: 1.6;
+
+  margin-bottom: 25px;
+}
+
+.tutorial-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tutorial-step {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 14px;
+
+  padding: 15px 5px;
+
+  border-bottom: 1px solid #292932;
+}
+
+.tutorial-step:last-child {
+  border-bottom: none;
+}
+
+.tutorial-step-number {
+  width: 28px;
+  height: 28px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background-color: #6d5dfc;
+  color: #fff;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.tutorial-step h4 {
+  margin-bottom: 5px;
+
+  font-size: 15px;
+  color: #fff;
+}
+
+.tutorial-step p {
+  color: #9999a5;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.tutorial-close-btn {
+  position: absolute;
+
+  top: 12px;
+  right: 15px;
+
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: transparent;
+  color: #888;
+
+  font-size: 25px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.tutorial-close-btn:hover {
+  background-color: #292932;
+  color: #fff;
+}
+
+.tutorial-close-bottom-btn {
+  display: block;
+
+  margin: 20px auto 0;
+
+  padding: 10px 22px;
+
+  border: none;
+  border-radius: 8px;
+
+  background-color: #292932;
+  color: #ddd;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.tutorial-close-bottom-btn:hover {
+  background-color: #353540;
+}
+
+/* =========================
    모바일
 ========================= */
 
 @media (max-width: 600px) {
+
   body {
     padding: 25px 15px;
   }
@@ -483,6 +745,11 @@ body {
     flex: 1;
   }
 
+  .help-btn {
+    width: 42px;
+    height: 42px;
+  }
+
   .shortcut-grid {
     grid-template-columns: repeat(
       auto-fill,
@@ -496,4 +763,14 @@ body {
     width: 110px;
     min-height: 110px;
   }
+
+  .tutorial-content {
+    padding: 25px 20px;
+    max-height: 90vh;
+  }
+
+  .tutorial-step {
+    gap: 10px;
+  }
+
 }
