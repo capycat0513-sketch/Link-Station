@@ -248,35 +248,102 @@ body {
 }
 
 /* =========================
-   삭제 버튼
+   바로가기 메뉴 버튼
 ========================= */
 
-.delete-shortcut-btn {
+.shortcut-menu-btn {
   position: absolute;
-  top: -5px;
-  right: 5px;
 
-  background: #ff4d4f;
-  color: white;
+  top: 6px;
+  right: 6px;
+
+  width: 26px;
+  height: 26px;
+
+  padding: 0;
 
   border: none;
   border-radius: 50%;
 
-  width: 20px;
-  height: 20px;
+  background-color: rgba(0, 0, 0, 0.55);
+  color: #aaaab5;
 
-  font-size: 11px;
-  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
 
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
 
+  cursor: pointer;
+
   z-index: 10;
+
+  transition: 0.2s;
+}
+
+.shortcut-menu-btn:hover {
+  background-color: #292932;
+  color: #fff;
+}
+
+/* =========================
+   편집 / 삭제 메뉴
+========================= */
+
+.shortcut-menu {
+  position: absolute;
+
+  top: 36px;
+  right: 6px;
+
+  min-width: 90px;
+
+  padding: 4px;
+
+  background-color: #22222b;
+  border: 1px solid #33333f;
+  border-radius: 8px;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+
+  display: none;
+  flex-direction: column;
+
+  z-index: 20;
+}
+
+.shortcut-menu button {
+  width: 100%;
+
+  padding: 8px 10px;
+
+  border: none;
+  border-radius: 5px;
+
+  background: transparent;
+
+  text-align: left;
+
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+.edit-shortcut-btn {
+  color: #fff;
+}
+
+.delete-shortcut-btn {
+  color: #ff6b6b;
+}
+
+.shortcut-menu button:hover {
+  background-color: #292932;
 }
 
 .delete-shortcut-btn:hover {
-  background: #ff3033;
+  color: #ff8585;
 }
 
 /* =========================
@@ -773,4 +840,13 @@ body {
     gap: 10px;
   }
 
+  .shortcut-menu-btn {
+    top: 5px;
+    right: 5px;
+  }
+
+  .shortcut-menu {
+    top: 35px;
+    right: 5px;
+  }
 }
