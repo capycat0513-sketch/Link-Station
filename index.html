@@ -9,7 +9,10 @@
   <link rel="stylesheet" href="style.css">
 
   <!-- Google Search Console 인증 -->
-  <meta name="google-site-verification" content="_LU2N9ZJH6C2kM1Z_zU2YvIqMoydLgAAmoUv9i4ooLk" />
+  <meta
+    name="google-site-verification"
+    content="_LU2N9ZJH6C2kM1Z_zU2YvIqMoydLgAAmoUv9i4ooLk"
+  />
 
   <!-- 검색엔진 설명 -->
   <meta
@@ -18,29 +21,66 @@
   >
 
   <!-- 대표 URL -->
-  <link rel="canonical" href="https://link-station.capycat0513.workers.dev/">
+  <link
+    rel="canonical"
+    href="https://link-station.capycat0513.workers.dev/"
+  >
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Link Station - 크롬 바로가기 무제한 사이트">
-  <meta property="og:description" content="크롬 새탭 바로가기 개수 제한 없는 링크 정거장! 무제한 바로가기를 추가하고 검색, 정렬, 관리해보세요.">
-  <meta property="og:image" content="https://link-station.capycat0513.workers.dev/logo.png">
-  <meta property="og:url" content="https://link-station.capycat0513.workers.dev/">
+  <meta
+    property="og:title"
+    content="Link Station - 크롬 바로가기 무제한 사이트"
+  >
+  <meta
+    property="og:description"
+    content="크롬 새탭 바로가기 개수 제한 없는 링크 정거장! 무제한 바로가기를 추가하고 검색, 정렬, 관리해보세요."
+  >
+  <meta
+    property="og:image"
+    content="https://link-station.capycat0513.workers.dev/logo.png"
+  >
+  <meta
+    property="og:url"
+    content="https://link-station.capycat0513.workers.dev/"
+  >
 
   <!-- 모바일 홈 화면 / 앱 형태 지원 -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Link Station">
-  <link rel="apple-touch-icon" href="logo.png">
+  <meta
+    name="mobile-web-app-capable"
+    content="yes"
+  >
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  >
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent"
+  >
+  <meta
+    name="apple-mobile-web-app-title"
+    content="Link Station"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    href="logo.png"
+  >
 
   <!-- 브라우저 테마 컬러 -->
-  <meta name="theme-color" content="#120A2A">
+  <meta
+    name="theme-color"
+    content="#120A2A"
+  >
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="logo.png">
+  <link
+    rel="icon"
+    type="image/png"
+    href="logo.png"
+  >
 </head>
-
 
 
 <body>
@@ -51,9 +91,18 @@
 
       <!-- Link Station 로고 -->
       <div class="brand">
-        <img src="logo.png" alt="Link Station 로고">
-        <span>Link Station</span>
+
+        <img
+          src="logo.png"
+          alt="Link Station 로고"
+        >
+
+        <span>
+          Link Station
+        </span>
+
       </div>
+
 
       <!-- 검색 -->
       <input
@@ -62,18 +111,31 @@
         placeholder="사이트 이름 또는 URL 검색..."
       >
 
+
       <!-- 정렬 / 추가 -->
       <div class="actions">
 
         <select id="sort-select">
-          <option value="latest">최신 등록순</option>
-          <option value="name">이름순</option>
-          <option value="clicks">자주 방문한 순</option>
+
+          <option value="latest">
+            최신 등록순
+          </option>
+
+          <option value="name">
+            이름순
+          </option>
+
+          <option value="clicks">
+            자주 방문한 순
+          </option>
+
         </select>
+
 
         <button id="add-btn">
           + 바로가기 추가
         </button>
+
 
         <!-- 튜토리얼 버튼 -->
         <button
@@ -90,11 +152,38 @@
     </header>
 
 
-    <!-- 바로가기 목록 -->
+    <!-- =========================
+         바로가기 목록
+    ========================= -->
+
     <main
       id="shortcut-grid"
       class="shortcut-grid"
     >
+
+      <!-- 바로가기가 하나도 없을 때 표시 -->
+      <div
+        id="empty-state"
+        class="empty-state"
+      >
+
+        <h2>
+          바로가기가 등록이 안됐습니다
+        </h2>
+
+        <p>
+          오른쪽 위에
+          <strong>「+ 바로가기 추가」</strong>를 눌러
+          바로가기 카드를 등록해보세요!
+        </p>
+
+        <img
+          src="바로가기없을때.png"
+          alt="Link Station 마스코트"
+        >
+
+      </div>
+
     </main>
 
   </div>
@@ -104,11 +193,17 @@
        바로가기 추가 / 수정 모달
   ========================= -->
 
-  <div id="add-modal" class="modal-overlay">
+  <div
+    id="add-modal"
+    class="modal-overlay"
+  >
 
     <div class="modal-content">
 
-      <h3 id="modal-title">새 바로가기 추가</h3>
+      <h3 id="modal-title">
+        새 바로가기 추가
+      </h3>
+
 
       <div class="input-group">
 
@@ -217,6 +312,7 @@
         Link Station의 사용 방법을 간단하게 확인할 수 있습니다.
       </p>
 
+
       <div class="tutorial-confirm-actions">
 
         <button
@@ -265,6 +361,7 @@
         Link Station 사용법
       </h2>
 
+
       <p class="tutorial-intro">
         자주 방문하는 사이트를 바로가기로 추가하고
         한곳에서 빠르게 관리해보세요.
@@ -273,6 +370,7 @@
 
       <div class="tutorial-steps">
 
+
         <div class="tutorial-step">
 
           <div class="tutorial-step-number">
@@ -280,12 +378,16 @@
           </div>
 
           <div>
-            <h4>바로가기 추가</h4>
+
+            <h4>
+              바로가기 추가
+            </h4>
 
             <p>
               「+ 바로가기 추가」 버튼을 눌러
               원하는 사이트를 등록하세요.
             </p>
+
           </div>
 
         </div>
@@ -298,12 +400,16 @@
           </div>
 
           <div>
-            <h4>바로가기 이용</h4>
+
+            <h4>
+              바로가기 이용
+            </h4>
 
             <p>
               등록한 바로가기 카드를 클릭하면
               해당 사이트로 바로 이동합니다.
             </p>
+
           </div>
 
         </div>
@@ -316,12 +422,16 @@
           </div>
 
           <div>
-            <h4>검색</h4>
+
+            <h4>
+              검색
+            </h4>
 
             <p>
               검색창에 사이트 이름이나 URL을 입력하면
               원하는 바로가기를 빠르게 찾을 수 있습니다.
             </p>
+
           </div>
 
         </div>
@@ -334,12 +444,16 @@
           </div>
 
           <div>
-            <h4>편집 및 삭제</h4>
+
+            <h4>
+              편집 및 삭제
+            </h4>
 
             <p>
               바로가기 오른쪽 위에 있는 ⋮ 버튼을 클릭하면
               편집과 삭제 버튼을 사용할 수 있습니다.
             </p>
+
           </div>
 
         </div>
@@ -352,12 +466,16 @@
           </div>
 
           <div>
-            <h4>정렬</h4>
+
+            <h4>
+              정렬
+            </h4>
 
             <p>
               최신 등록순, 이름순, 자주 방문한 순으로
               바로가기를 정렬할 수 있습니다.
             </p>
+
           </div>
 
         </div>
@@ -370,15 +488,20 @@
           </div>
 
           <div>
-            <h4>자동 저장</h4>
+
+            <h4>
+              자동 저장
+            </h4>
 
             <p>
               등록한 바로가기는 브라우저에 저장되어
               다시 방문해도 유지됩니다.
             </p>
+
           </div>
 
         </div>
+
 
         <div class="tutorial-step">
 
@@ -387,15 +510,20 @@
           </div>
 
           <div>
-            <h4>꿀팁</h4>
+
+            <h4>
+              꿀팁
+            </h4>
 
             <p>
               크롬 바로가기에 Link Station을 추가하면
               더 편하게 Link Station을 이용할 수 있습니다.
             </p>
+
           </div>
 
         </div>
+
 
       </div>
 
@@ -413,7 +541,11 @@
   </div>
 
 
-  <script src="script.js" defer></script>
+  <!-- JavaScript -->
+  <script
+    src="script.js"
+    defer
+  ></script>
 
 </body>
 </html>
