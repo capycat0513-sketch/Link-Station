@@ -37,6 +37,20 @@ const sortSelect = document.getElementById('sort-select');
 const modalTitle = document.getElementById('modal-title');
 
 
+// 오류 알림 모달
+const alertModal =
+  document.getElementById('alert-modal');
+
+const alertTitle =
+  document.getElementById('alert-title');
+
+const alertMessage =
+  document.getElementById('alert-message');
+
+const alertConfirmBtn =
+  document.getElementById('alert-confirm-btn');
+
+
 // ==========================================
 // 3. 모달 제어
 // ==========================================
@@ -79,16 +93,66 @@ addModal.addEventListener('click', (e) => {
 
 
 // ==========================================
+// 오류 알림 모달
+// ==========================================
+
+// 오류 알림 표시
+function showAlert(message, title = '입력 오류') {
+
+  alertTitle.textContent = title;
+  alertMessage.textContent = message;
+
+  alertModal.classList.add('active');
+
+  alertConfirmBtn.focus();
+}
+
+
+// 오류 알림 닫기
+function closeAlert() {
+
+  alertModal.classList.remove('active');
+}
+
+
+// 확인 버튼
+alertConfirmBtn.addEventListener(
+  'click',
+  closeAlert
+);
+
+
+// 오류 알림 바깥 클릭 시 닫기
+alertModal.addEventListener('click', (e) => {
+
+  if (e.target === alertModal) {
+    closeAlert();
+  }
+
+});
+
+
+// ==========================================
 // 4. 커스텀 아이콘 토글
 // ==========================================
 
 iconToggle.addEventListener('change', (e) => {
+
   if (e.target.checked) {
-    customIconGroup.classList.remove('hidden');
+
+    customIconGroup.classList.remove(
+      'hidden'
+    );
+
   } else {
-    customIconGroup.classList.add('hidden');
+
+    customIconGroup.classList.add(
+      'hidden'
+    );
+
     customIconUrlInput.value = '';
   }
+
 });
 
 
@@ -98,33 +162,51 @@ iconToggle.addEventListener('change', (e) => {
 
 saveShortcutBtn.addEventListener('click', () => {
 
-  const name = siteNameInput.value.trim();
+  const name =
+    siteNameInput.value.trim();
 
-  let url = siteUrlInput.value
-    .trim()
-    .replace(/\s+/g, '');
+  let url =
+    siteUrlInput.value
+      .trim()
+      .replace(/\s+/g, '');
 
-  const useCustomIcon = iconToggle.checked;
-  const customIconUrl = customIconUrlInput.value.trim();
+  const useCustomIcon =
+    iconToggle.checked;
+
+  const customIconUrl =
+    customIconUrlInput.value.trim();
 
 
+  // 이름 / 주소 입력 확인
   if (!name || !url) {
-    alert('사이트 이름과 주소를 모두 입력해주세요!');
+
+    showAlert(
+      '사이트 이름과 주소를 모두 입력해주세요!'
+    );
+
     return;
   }
 
 
   // https://가 없으면 자동 추가
   if (!/^https?:\/\//i.test(url)) {
-    url = 'https://' + url;
+
+    url =
+      'https://' + url;
   }
 
 
   // URL 검사
   try {
+
     new URL(url);
+
   } catch (e) {
-    alert('올바른 사이트 주소를 입력해주세요!');
+
+    showAlert(
+      '올바른 사이트 주소를 입력해주세요!'
+    );
+
     return;
   }
 
@@ -136,12 +218,18 @@ saveShortcutBtn.addEventListener('click', () => {
   if (useCustomIcon && customIconUrl) {
 
     try {
+
       new URL(customIconUrl);
 
-      finalIcon = customIconUrl;
+      finalIcon =
+        customIconUrl;
 
     } catch (e) {
-      alert('올바른 이미지 주소를 입력해주세요!');
+
+      showAlert(
+        '올바른 이미지 주소를 입력해주세요!'
+      );
+
       return;
     }
 
@@ -150,17 +238,22 @@ saveShortcutBtn.addEventListener('click', () => {
     // 사이트 favicon 자동 가져오기
     try {
 
-      const domain = new URL(url).hostname;
+      const domain =
+        new URL(url).hostname;
 
       finalIcon =
         `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
 
     } catch (e) {
 
-      console.error('URL을 확인할 수 없습니다.', e);
+      console.error(
+        'URL을 확인할 수 없습니다.',
+        e
+      );
 
       finalIcon = '';
     }
+
   }
 
 
@@ -177,9 +270,14 @@ saveShortcutBtn.addEventListener('click', () => {
 
     if (index !== -1) {
 
-      shortcuts[index].name = name;
-      shortcuts[index].url = url;
-      shortcuts[index].icon = finalIcon;
+      shortcuts[index].name =
+        name;
+
+      shortcuts[index].url =
+        url;
+
+      shortcuts[index].icon =
+        finalIcon;
     }
 
   }
@@ -204,9 +302,12 @@ saveShortcutBtn.addEventListener('click', () => {
       clicks: 0,
 
       timestamp: Date.now()
+
     };
 
-    shortcuts.push(newShortcut);
+    shortcuts.push(
+      newShortcut
+    );
   }
 
 
@@ -217,6 +318,7 @@ saveShortcutBtn.addEventListener('click', () => {
   renderShortcuts();
 
   closeModal();
+
 });
 
 
@@ -225,10 +327,12 @@ saveShortcutBtn.addEventListener('click', () => {
 // ==========================================
 
 function saveToStorage() {
+
   localStorage.setItem(
     'my_shortcuts',
     JSON.stringify(shortcuts)
   );
+
 }
 
 
@@ -248,8 +352,13 @@ function renderShortcuts() {
   // 검색
   let filtered =
     shortcuts.filter(item =>
-      item.name.toLowerCase().includes(keyword) ||
-      item.url.toLowerCase().includes(keyword)
+      item.name
+        .toLowerCase()
+        .includes(keyword) ||
+
+      item.url
+        .toLowerCase()
+        .includes(keyword)
     );
 
 
@@ -257,7 +366,8 @@ function renderShortcuts() {
   if (sortType === 'latest') {
 
     filtered.sort(
-      (a, b) => b.timestamp - a.timestamp
+      (a, b) =>
+        b.timestamp - a.timestamp
     );
 
   } else if (sortType === 'name') {
@@ -270,8 +380,10 @@ function renderShortcuts() {
   } else if (sortType === 'clicks') {
 
     filtered.sort(
-      (a, b) => b.clicks - a.clicks
+      (a, b) =>
+        b.clicks - a.clicks
     );
+
   }
 
 
@@ -285,8 +397,13 @@ function renderShortcuts() {
     shortcutGrid.innerHTML = '';
 
     if (emptyState) {
-      shortcutGrid.appendChild(emptyState);
-      emptyState.style.display = 'flex';
+
+      shortcutGrid.appendChild(
+        emptyState
+      );
+
+      emptyState.style.display =
+        'flex';
     }
 
     return;
@@ -305,7 +422,8 @@ function renderShortcuts() {
     const noResultMessage =
       document.createElement('div');
 
-    noResultMessage.className = 'empty-state';
+    noResultMessage.className =
+      'empty-state';
 
     noResultMessage.innerHTML = `
       <h2>검색 결과가 없습니다</h2>
@@ -315,7 +433,9 @@ function renderShortcuts() {
       </p>
     `;
 
-    shortcutGrid.appendChild(noResultMessage);
+    shortcutGrid.appendChild(
+      noResultMessage
+    );
 
     return;
   }
@@ -398,25 +518,39 @@ function renderShortcuts() {
 
     // 요소 선택
     const shortcutLink =
-      card.querySelector('.shortcut-item');
+      card.querySelector(
+        '.shortcut-item'
+      );
 
     const icon =
-      card.querySelector('.icon-wrapper img');
+      card.querySelector(
+        '.icon-wrapper img'
+      );
 
     const shortcutName =
-      card.querySelector('.shortcut-name');
+      card.querySelector(
+        '.shortcut-name'
+      );
 
     const menuButton =
-      card.querySelector('.shortcut-menu-btn');
+      card.querySelector(
+        '.shortcut-menu-btn'
+      );
 
     const menu =
-      card.querySelector('.shortcut-menu');
+      card.querySelector(
+        '.shortcut-menu'
+      );
 
     const editButton =
-      card.querySelector('.edit-shortcut-btn');
+      card.querySelector(
+        '.edit-shortcut-btn'
+      );
 
     const deleteButton =
-      card.querySelector('.delete-shortcut-btn');
+      card.querySelector(
+        '.delete-shortcut-btn'
+      );
 
 
     // 데이터 적용
@@ -431,156 +565,191 @@ function renderShortcuts() {
 
 
     // 아이콘 로딩 실패 시 숨김
-    icon.addEventListener('error', () => {
-      icon.style.display = 'none';
-    });
+    icon.addEventListener(
+      'error',
+      () => {
+
+        icon.style.display =
+          'none';
+
+      }
+    );
 
 
     // ========================================
     // ⋮ 메뉴 열기 / 닫기
     // ========================================
 
-    menuButton.addEventListener('click', (e) => {
+    menuButton.addEventListener(
+      'click',
+      (e) => {
 
-      e.preventDefault();
-      e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
 
-      const isOpen =
-        menu.style.display === 'flex';
+        const isOpen =
+          menu.style.display === 'flex';
 
 
-      // 다른 메뉴 전부 닫기
-      document
-        .querySelectorAll('.shortcut-menu')
-        .forEach(otherMenu => {
-          otherMenu.style.display = 'none';
-        });
+        // 다른 메뉴 전부 닫기
+        document
+          .querySelectorAll(
+            '.shortcut-menu'
+          )
+          .forEach(otherMenu => {
 
-      document
-        .querySelectorAll('.shortcut-menu-btn')
-        .forEach(otherButton => {
-          otherButton.setAttribute(
+            otherMenu.style.display =
+              'none';
+
+          });
+
+
+        document
+          .querySelectorAll(
+            '.shortcut-menu-btn'
+          )
+          .forEach(otherButton => {
+
+            otherButton.setAttribute(
+              'aria-expanded',
+              'false'
+            );
+
+          });
+
+
+        // 현재 메뉴 열기
+        if (!isOpen) {
+
+          menu.style.display =
+            'flex';
+
+          menuButton.setAttribute(
             'aria-expanded',
-            'false'
+            'true'
           );
-        });
 
+        }
 
-      // 현재 메뉴 열기
-      if (!isOpen) {
-
-        menu.style.display = 'flex';
-
-        menuButton.setAttribute(
-          'aria-expanded',
-          'true'
-        );
       }
-    });
+    );
 
 
     // ========================================
     // 바로가기 클릭
     // ========================================
 
-    shortcutLink.addEventListener('click', () => {
+    shortcutLink.addEventListener(
+      'click',
+      () => {
 
-      const index =
-        shortcuts.findIndex(
-          s => s.id === item.id
-        );
+        const index =
+          shortcuts.findIndex(
+            s => s.id === item.id
+          );
 
-      if (index !== -1) {
+        if (index !== -1) {
 
-        shortcuts[index].clicks += 1;
+          shortcuts[index].clicks += 1;
 
-        saveToStorage();
+          saveToStorage();
+        }
+
+
+        // 자주 방문한 순으로 정렬 중이면
+        // 클릭 후 순서를 갱신
+        if (
+          sortSelect.value === 'clicks'
+        ) {
+
+          setTimeout(
+            renderShortcuts,
+            500
+          );
+
+        }
+
       }
-
-
-      // 자주 방문한 순으로 정렬 중이면
-      // 클릭 후 순서를 갱신
-      if (sortSelect.value === 'clicks') {
-
-        setTimeout(
-          renderShortcuts,
-          500
-        );
-      }
-    });
+    );
 
 
     // ========================================
     // 편집
     // ========================================
 
-    editButton.addEventListener('click', (e) => {
+    editButton.addEventListener(
+      'click',
+      (e) => {
 
-      e.preventDefault();
-      e.stopPropagation();
-
-
-      // 메뉴 닫기
-      menu.style.display = 'none';
-
-      menuButton.setAttribute(
-        'aria-expanded',
-        'false'
-      );
+        e.preventDefault();
+        e.stopPropagation();
 
 
-      // 수정 대상 설정
-      editingShortcutId =
-        item.id;
+        // 메뉴 닫기
+        menu.style.display =
+          'none';
 
-      modalTitle.textContent =
-        '바로가기 수정';
-
-      siteNameInput.value =
-        item.name;
-
-      siteUrlInput.value =
-        item.url;
-
-
-      // 커스텀 아이콘인지 확인
-      const isCustomIcon =
-        item.icon &&
-        !item.icon.includes(
-          'google.com/s2/favicons'
+        menuButton.setAttribute(
+          'aria-expanded',
+          'false'
         );
 
-      iconToggle.checked =
-        isCustomIcon;
+
+        // 수정 대상 설정
+        editingShortcutId =
+          item.id;
+
+        modalTitle.textContent =
+          '바로가기 수정';
+
+        siteNameInput.value =
+          item.name;
+
+        siteUrlInput.value =
+          item.url;
 
 
-      if (isCustomIcon) {
+        // 커스텀 아이콘인지 확인
+        const isCustomIcon =
+          item.icon &&
+          !item.icon.includes(
+            'google.com/s2/favicons'
+          );
 
-        customIconGroup.classList.remove(
-          'hidden'
+        iconToggle.checked =
+          isCustomIcon;
+
+
+        if (isCustomIcon) {
+
+          customIconGroup.classList.remove(
+            'hidden'
+          );
+
+          customIconUrlInput.value =
+            item.icon;
+
+        } else {
+
+          customIconGroup.classList.add(
+            'hidden'
+          );
+
+          customIconUrlInput.value =
+            '';
+
+        }
+
+
+        // 모달 열기
+        addModal.classList.add(
+          'active'
         );
 
-        customIconUrlInput.value =
-          item.icon;
+        siteNameInput.focus();
 
-      } else {
-
-        customIconGroup.classList.add(
-          'hidden'
-        );
-
-        customIconUrlInput.value =
-          '';
       }
-
-
-      // 모달 열기
-      addModal.classList.add(
-        'active'
-      );
-
-      siteNameInput.focus();
-    });
+    );
 
 
     // ========================================
@@ -609,16 +778,24 @@ function renderShortcuts() {
           saveToStorage();
 
           renderShortcuts();
+
         }
+
       }
     );
 
 
-    fragment.appendChild(card);
+    fragment.appendChild(
+      card
+    );
+
   });
 
 
-  shortcutGrid.appendChild(fragment);
+  shortcutGrid.appendChild(
+    fragment
+  );
+
 }
 
 
@@ -626,23 +803,37 @@ function renderShortcuts() {
 // 8. 메뉴 바깥 클릭 시 닫기
 // ==========================================
 
-document.addEventListener('click', () => {
+document.addEventListener(
+  'click',
+  () => {
 
-  document
-    .querySelectorAll('.shortcut-menu')
-    .forEach(menu => {
-      menu.style.display = 'none';
-    });
+    document
+      .querySelectorAll(
+        '.shortcut-menu'
+      )
+      .forEach(menu => {
 
-  document
-    .querySelectorAll('.shortcut-menu-btn')
-    .forEach(button => {
-      button.setAttribute(
-        'aria-expanded',
-        'false'
-      );
-    });
-});
+        menu.style.display =
+          'none';
+
+      });
+
+
+    document
+      .querySelectorAll(
+        '.shortcut-menu-btn'
+      )
+      .forEach(button => {
+
+        button.setAttribute(
+          'aria-expanded',
+          'false'
+        );
+
+      });
+
+  }
+);
 
 
 // ==========================================
@@ -672,7 +863,9 @@ renderShortcuts();
 // ==========================================
 
 const helpBtn =
-  document.getElementById('help-btn');
+  document.getElementById(
+    'help-btn'
+  );
 
 const tutorialConfirmModal =
   document.getElementById(
@@ -706,12 +899,16 @@ const tutorialCloseBottomBtn =
 
 
 // 도움말 버튼
-helpBtn.addEventListener('click', () => {
+helpBtn.addEventListener(
+  'click',
+  () => {
 
-  tutorialConfirmModal.classList.add(
-    'active'
-  );
-});
+    tutorialConfirmModal.classList.add(
+      'active'
+    );
+
+  }
+);
 
 
 // 튜토리얼 보기
@@ -726,6 +923,7 @@ tutorialYesBtn.addEventListener(
     tutorialModal.classList.add(
       'active'
     );
+
   }
 );
 
@@ -738,6 +936,7 @@ tutorialNoBtn.addEventListener(
     tutorialConfirmModal.classList.remove(
       'active'
     );
+
   }
 );
 
@@ -748,6 +947,7 @@ function closeTutorial() {
   tutorialModal.classList.remove(
     'active'
   );
+
 }
 
 tutorialCloseBtn.addEventListener(
@@ -773,7 +973,9 @@ tutorialConfirmModal.addEventListener(
       tutorialConfirmModal.classList.remove(
         'active'
       );
+
     }
+
   }
 );
 
@@ -790,6 +992,8 @@ tutorialModal.addEventListener(
       tutorialModal.classList.remove(
         'active'
       );
+
     }
+
   }
 );
