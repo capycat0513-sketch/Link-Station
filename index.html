@@ -7,6 +7,9 @@
   <title>Link Station - 크롬 바로가기 무제한 사이트</title>
 
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="modal.css">
+  <link rel="stylesheet" href="responsive.css">
 
   <!-- Google Search Console 인증 -->
   <meta
@@ -28,18 +31,22 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
+
   <meta
     property="og:title"
     content="Link Station - 크롬 바로가기 무제한 사이트"
   >
+
   <meta
     property="og:description"
     content="크롬 새탭 바로가기 개수 제한 없는 링크 정거장! 무제한 바로가기를 추가하고 검색, 정렬, 관리해보세요."
   >
+
   <meta
     property="og:image"
     content="https://link-station.capycat0513.workers.dev/logo.png"
   >
+
   <meta
     property="og:url"
     content="https://link-station.capycat0513.workers.dev/"
@@ -50,14 +57,17 @@
     name="mobile-web-app-capable"
     content="yes"
   >
+
   <meta
     name="apple-mobile-web-app-capable"
     content="yes"
   >
+
   <meta
     name="apple-mobile-web-app-status-bar-style"
     content="black-translucent"
   >
+
   <meta
     name="apple-mobile-web-app-title"
     content="Link Station"
@@ -115,23 +125,95 @@
       <!-- 정렬 / 추가 -->
       <div class="actions">
 
-        <select id="sort-select">
+        <!-- 커스텀 정렬 드롭다운 -->
+        <div
+          class="custom-select"
+          id="custom-sort-select"
+        >
+
+          <button
+            class="custom-select-button"
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+          >
+
+            <span>
+              최신 등록순
+            </span>
+
+            <span class="custom-select-arrow">
+              ⌄
+            </span>
+
+          </button>
+
+
+          <div
+            class="custom-select-menu"
+            role="listbox"
+          >
+
+            <button
+              type="button"
+              class="custom-select-option selected"
+              data-value="latest"
+              role="option"
+              aria-selected="true"
+            >
+              최신 등록순
+            </button>
+
+            <button
+              type="button"
+              class="custom-select-option"
+              data-value="recent"
+              role="option"
+              aria-selected="false"
+            >
+              최근 사용순
+            </button>
+
+            <button
+              type="button"
+              class="custom-select-option"
+              data-value="clicks"
+              role="option"
+              aria-selected="false"
+            >
+              사용 횟수순
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!--
+          기존 JS와 연결하기 위한 실제 select.
+          화면에는 표시하지 않음.
+        -->
+        <select
+          id="sort-select"
+          hidden
+        >
 
           <option value="latest">
             최신 등록순
           </option>
 
-          <option value="name">
-            이름순
+          <option value="recent">
+            최근 사용순
           </option>
 
           <option value="clicks">
-            자주 방문한 순
+            사용 횟수순
           </option>
 
         </select>
 
 
+        <!-- 바로가기 추가 -->
         <button id="add-btn">
           + 바로가기 추가
         </button>
@@ -472,7 +554,7 @@
             </h4>
 
             <p>
-              최신 등록순, 이름순, 자주 방문한 순으로
+              최신 등록순, 최근 사용순, 사용 횟수순으로
               바로가기를 정렬할 수 있습니다.
             </p>
 
@@ -545,43 +627,64 @@
        오류 알림 모달
   ========================= -->
 
-<div
-  id="alert-modal"
-  class="modal-overlay"
->
-  <div class="alert-content">
+  <div
+    id="alert-modal"
+    class="modal-overlay"
+  >
 
-    <img
-      src="error-screen.png"
-      class="alert-image"
-    >
+    <div class="alert-content">
 
-    <h3 id="alert-title">
-      입력 오류
-    </h3>
-
-    <p id="alert-message">
-      이름과 주소를 모두 입력해주세요.
-    </p>
-
-    <div class="alert-actions">
-
-      <button
-        id="alert-confirm-btn"
-        type="button"
+      <img
+        src="error-screen.png"
+        class="alert-image"
+        alt="오류"
       >
-        확인
-      </button>
+
+      <h3 id="alert-title">
+        입력 오류
+      </h3>
+
+      <p id="alert-message">
+        이름과 주소를 모두 입력해주세요.
+      </p>
+
+      <div class="alert-actions">
+
+        <button
+          id="alert-confirm-btn"
+          type="button"
+        >
+          확인
+        </button>
+
+      </div>
 
     </div>
 
   </div>
-</div>
 
 
-  <!-- JavaScript -->
+  <!-- =========================
+       JavaScript
+  ========================= -->
+
   <script
-    src="script.js"
+    src="storage.js"
+    defer
+  ></script>
+
+  <script
+    src="ui.js"
+    defer
+  ></script>
+
+  <script
+    src="shortcuts.js"
+    defer
+  ></script>
+
+  <script
+    src="tutorial.js"
     defer
   ></script>
 
