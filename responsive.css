@@ -1,0 +1,141 @@
+/* =========================
+   모바일
+========================= */
+
+@media (max-width: 600px) {
+
+  body {
+    padding: 25px 15px;
+  }
+
+  .control-panel {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #search-input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .custom-select,
+  #add-btn {
+    flex: 1;
+  }
+
+  .help-btn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .shortcut-grid {
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(110px, 1fr)
+    );
+
+    gap: 15px;
+  }
+
+  .shortcut-item {
+    width: 110px;
+    min-height: 110px;
+  }
+
+  .tutorial-content {
+    padding: 25px 20px;
+    max-height: 90vh;
+  }
+
+  .tutorial-step {
+    gap: 10px;
+  }
+
+  .shortcut-menu-btn {
+    top: 5px;
+    right: 5px;
+  }
+
+  .shortcut-menu {
+    top: 35px;
+    right: 5px;
+  }
+
+  /* =========================
+     오류 알림 - 모바일
+  ========================= */
+
+  .alert-content {
+    width: 90%;
+    max-width: 380px;
+    padding: 25px 22px;
+  }
+
+  .alert-image {
+    width: 230px;
+    height: 230px;
+  }
+
+  .alert-content h3 {
+    font-size: 18px;
+  }
+
+  .alert-content p {
+    font-size: 14px;
+  }
+
+  #alert-confirm-btn {
+    min-width: 90px;
+  }
+
+  /* =========================
+     빈 상태 - 모바일
+  ========================= */
+
+  .shortcut-grid:has(> .empty-state) {
+    min-height: 520px !important;
+  }
+
+  .shortcut-grid:has(> .empty-state) > .empty-state {
+    width: 100% !important;
+    min-height: 420px !important;
+    max-width: 100% !important;
+  }
+
+  .shortcut-grid:has(> .empty-state) .empty-state img {
+    width: 180px !important;
+    max-width: 60vw !important;
+    height: auto !important;
+
+    margin-bottom: 18px !important;
+  }
+
+  .shortcut-grid:has(> .empty-state) .empty-state h2 {
+    width: auto !important;
+
+    margin: 0 0 8px !important;
+
+    font-size: 18px !important;
+
+    white-space: nowrap;
+  }
+
+  .shortcut-grid:has(> .empty-state) .empty-state p {
+    width: auto !important;
+
+    margin: 0 !important;
+
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+
+    white-space: nowrap;
+  }
+
+  .shortcut-grid:has(> .empty-state) .empty-state p strong {
+    font-weight: 600 !important;
+  }
+}
