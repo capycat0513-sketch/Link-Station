@@ -1,0 +1,418 @@
+/* =========================
+   커스텀 정렬 드롭다운
+========================= */
+
+.custom-select {
+  position: relative;
+  width: 145px;
+  flex-shrink: 0;
+}
+
+.custom-select-button {
+  width: 100%;
+  height: 42px;
+
+  padding: 0 13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 1px solid #33333f;
+  border-radius: 8px;
+
+  background-color: #18181f;
+  color: #fff;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s,
+    background-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.custom-select-button:hover {
+  border-color: #6d5dfc;
+  background-color: #1d1d26;
+}
+
+.custom-select-button:focus {
+  outline: none;
+  border-color: #6d5dfc;
+  box-shadow: 0 0 0 2px rgba(109, 93, 252, 0.15);
+}
+
+.custom-select-arrow {
+  margin-left: 8px;
+
+  color: #aaaab5;
+  font-size: 16px;
+  line-height: 1;
+
+  transition: transform 0.2s;
+}
+
+.custom-select.open .custom-select-arrow {
+  transform: rotate(180deg);
+}
+
+/* 드롭다운 메뉴 */
+
+.custom-select-menu {
+  position: absolute;
+
+  top: calc(100% + 6px);
+  left: 0;
+
+  width: 100%;
+
+  padding: 5px;
+
+  background-color: #18181f;
+
+  border: 1px solid #33333f;
+  border-radius: 9px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.45),
+    0 0 15px rgba(109, 93, 252, 0.08);
+
+  display: none;
+  flex-direction: column;
+
+  z-index: 100;
+
+  animation: sortMenuOpen 0.15s ease;
+}
+
+.custom-select.open .custom-select-menu {
+  display: flex;
+}
+
+@keyframes sortMenuOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 드롭다운 항목 */
+
+.custom-select-option {
+  width: 100%;
+
+  padding: 9px 10px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: transparent;
+  color: #ddd;
+
+  text-align: left;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.custom-select-option:hover {
+  background-color: rgba(109, 93, 252, 0.18);
+  color: #fff;
+}
+
+.custom-select-option.selected {
+  background-color: #6d5dfc;
+  color: #fff;
+  font-weight: 600;
+}
+
+.custom-select-option.selected:hover {
+  background-color: #5b4bea;
+}
+
+/* =========================
+   바로가기 카드
+========================= */
+
+.shortcut-item-container {
+  position: relative;
+  display: inline-block;
+}
+
+.shortcut-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 120px;
+  min-height: 120px;
+
+  text-decoration: none;
+  color: #fff;
+
+  background-color: #18181f;
+  border: 1px solid #2d2d38;
+  border-radius: 12px;
+
+  padding: 15px;
+
+  transition: 0.2s;
+}
+
+.shortcut-item:hover {
+  background-color: #22222b;
+  border-color: #6d5dfc;
+  transform: translateY(-2px);
+}
+
+.shortcut-item:visited {
+  color: #fff;
+}
+
+/* =========================
+   아이콘
+========================= */
+
+.icon-wrapper {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 10px;
+}
+
+.icon-wrapper img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* =========================
+   사이트 이름
+========================= */
+
+.shortcut-name {
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+
+  max-width: 100%;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================
+   바로가기 메뉴 버튼
+========================= */
+
+.shortcut-menu-btn {
+  position: absolute;
+
+  top: 6px;
+  right: 6px;
+
+  width: 26px;
+  height: 26px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background-color: rgba(0, 0, 0, 0.55);
+  color: #aaaab5;
+
+  font-size: 18px;
+  line-height: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  z-index: 10;
+
+  transition: 0.2s;
+}
+
+.shortcut-menu-btn:hover {
+  background-color: #292932;
+  color: #fff;
+}
+
+/* =========================
+   편집 / 삭제 메뉴
+========================= */
+
+.shortcut-menu {
+  position: absolute;
+
+  top: 36px;
+  right: 6px;
+
+  min-width: 90px;
+
+  padding: 4px;
+
+  background-color: #22222b;
+  border: 1px solid #33333f;
+  border-radius: 8px;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+
+  display: none;
+  flex-direction: column;
+
+  z-index: 20;
+}
+
+.shortcut-menu button {
+  width: 100%;
+
+  padding: 8px 10px;
+
+  border: none;
+  border-radius: 5px;
+
+  background: transparent;
+
+  text-align: left;
+
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+.edit-shortcut-btn {
+  color: #fff;
+}
+
+.delete-shortcut-btn {
+  color: #ff6b6b;
+}
+
+.shortcut-menu button:hover {
+  background-color: #292932;
+}
+
+.delete-shortcut-btn:hover {
+  color: #ff8585;
+}
+
+/* ==========================================
+   빈 상태 화면
+   마스코트 → 제목 → 설명
+========================================== */
+
+.shortcut-grid:has(> .empty-state) {
+  display: flex !important;
+  flex-direction: column !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 100% !important;
+  min-height: 520px !important;
+
+  gap: 0 !important;
+
+  grid-template-columns: none !important;
+}
+
+.shortcut-grid:has(> .empty-state) > .empty-state {
+  display: flex !important;
+  flex-direction: column !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 100% !important;
+  max-width: 700px !important;
+  min-height: 420px !important;
+
+  margin: 0 auto !important;
+  padding: 0 !important;
+
+  box-sizing: border-box;
+
+  text-align: center;
+
+  grid-column: auto !important;
+}
+
+/* 마스코트 */
+
+.shortcut-grid:has(> .empty-state) .empty-state img {
+  display: block !important;
+
+  width: 220px !important;
+  max-width: 60vw !important;
+  height: auto !important;
+
+  object-fit: contain;
+
+  order: 1;
+
+  margin: 0 0 18px !important;
+}
+
+/* 제목 */
+
+.shortcut-grid:has(> .empty-state) .empty-state h2 {
+  width: auto !important;
+
+  margin: 0 0 8px !important;
+
+  color: #a0a0a0 !important;
+
+  font-size: 18px !important;
+  font-weight: 600 !important;
+
+  white-space: nowrap;
+
+  order: 2;
+}
+
+/* 설명 */
+
+.shortcut-grid:has(> .empty-state) .empty-state p {
+  width: auto !important;
+
+  margin: 0 !important;
+
+  color: #707070 !important;
+
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+
+  white-space: nowrap;
+
+  order: 3;
+}
+
+.shortcut-grid:has(> .empty-state) .empty-state p strong {
+  color: #8a8a8a !important;
+  font-weight: 600 !important;
+}
